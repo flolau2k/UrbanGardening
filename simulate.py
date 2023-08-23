@@ -9,8 +9,8 @@ def temperature_curve(env):
     offset = 15
 
     while True:
-        extraTerm = math.sin(2 * math.pi * frequency * time)
-        temperature = offset + amplitute * extraTerm
+        extra_term = math.sin(2 * math.pi * frequency * time)
+        temperature = offset + amplitute * extra_term
         yield env.timeout(1)
         time += 1
         print(f"Time: {time} hours, Temperature: {temperature:.2f}C")
