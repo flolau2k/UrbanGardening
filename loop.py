@@ -1,51 +1,39 @@
+from random import random
+from time import sleep
+import matplotlib.pyplot as plt
+# import numpy as np
+from myPID import myPID
 
-# code from https://itzwieseltal.wordpress.com/2020/06/02/python-pid-regler/
-class myPID :
-	def __init__(self, dt, max, min, kp, kd, ki) :
-		self.dt  = dt
-		self.max = max
-		self.min = min
-		self.kp  = kp
-		self.kd  = kd
-		self.ki  = ki
-		self.err = 0
-		self.int = 0
-	def run(self,set,act):
-		error = set - act
 
-		P = self.kp * error
+pid = myPID(0.1, 100, -100, 0.5, 0, 0)
 
-		self.int += error * self.dt
-		I = self.ki * self.int
+x = list(range(10))
+ph = 7
+ph_hist = [ph] * 10
 
-		D = self.kd * (error - self.err) / self.dt
+plt.ion()
+fig = plt.figure()
+ax = fig.add_subplot(111)
+# ax.set_xlim(0, 10)
+ax.set_ylim(5, 9)
+line1, = ax.plot(x, ph_hist, 'b-')
 
-		output = P + I + D
-
-		if output > self.max :
-			output = self.max
-		elif output < self.min :
-			output = self.min
-
-		self.err = error
-		return(output)
-  
- 
-def main():
-	pid = myPID(0.1, 100, -100, 0.1, 0.01, 0.5)
-	val = 20
-	for i in range(100) :
-		inc = pid.run(0, val)
-		print('val:','{:7.3f}'.format(val),' inc:','{:7.3f}'.format(inc))
-		val += inc
-
-if __name__ == "__main__":
-	main()
-
-# pid = myPID(0.1, 100, -100, 0.1, 0.01, 0.5)
-
-# with open("values.txt", "r") as f:
-# 	for line in f:
-# 		inc = pid.run(7, float(line))
-# 		print(f"output: {inc}\n")
-	
+while (True):
+    ph += random() * 2 - 1
+    inc = pid.run(7, ph)
+    act = " - "
+    if inc > 0:
+        act = "PH up"
+    elif inc < 0:
+        act = "PH down"
+    print(f"ph = {ph:.2f}, act = {act}")
+    ph += inc
+    ph_hist.append(ph)
+    if len(ph_hist) > 10:
+        ph_hist.pop(0)
+    line1.set_ydata(ph_hist)
+    # ax.relim()
+    # ax.autoscale_view()
+    # fig.canvas.draw()
+    fig.canvas.flush_events()
+    sleep(0.5)
