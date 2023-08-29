@@ -1,7 +1,6 @@
 from random import random
 from time import sleep
 import matplotlib.pyplot as plt
-# import numpy as np
 from myPID import myPID
 
 
@@ -32,8 +31,5 @@ while (True):
     if len(ph_hist) > 10:
         ph_hist.pop(0)
     line1.set_ydata(ph_hist)
-    # ax.relim()
-    # ax.autoscale_view()
-    # fig.canvas.draw()
     fig.canvas.flush_events()
     sleep(0.5)
