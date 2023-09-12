@@ -8,6 +8,8 @@ import ElectricityIcon from './icons/ElectricityIcon.vue';
 import TemperatureIcon from './icons/TemperatureIcon.vue';
 import DownloadIcon from './icons/DownloadIcon.vue';
 import CustomButton from './CustomButton.vue';
+import DropDown from './DropDown.vue';
+import { DropDownData } from '../../types/DropDownData';
 
 const props = defineProps<{ 
     data: StatusData,
@@ -17,16 +19,27 @@ const props = defineProps<{
     alert("Not yet implemented!");
  }
 
+ const selectedPlant = (plant: DropDownData): void => {
+    alert(`You selected ${plant.itemName}`);
+  }
+
+ const mockDataDropdown: DropDownData[] = [{id: 1, itemName: "Broccoli"}, {id: 2, itemName: "Garlic"}]
+
 </script>
 
 <template>
     <div class="bg-white w-[420px] h-[280px] p-4 rounded-lg">
-        <div class="flex gap-x-3 text-teal-500 items-center">
-            <div>
-                <StatusIcon class="w-10 h-10" />
+        <div class="flex text-teal-500 items-center">
+            <div class="flex flex-grow items-center gap-x-3">
+                <div>
+                    <StatusIcon class="w-10 h-10" />
+                </div>
+                <div class="text-2xl font-bold">
+                    Plant Status
+                </div>
             </div>
-            <div class="text-2xl font-bold">
-                Plant Status
+            <div>
+                <DropDown dropdown-name="Plant" @custom-click="selectedPlant" :data="mockDataDropdown" />
             </div>
         </div>
         <div class="pt-3 text-sm">
@@ -39,7 +52,7 @@ const props = defineProps<{
             <PlantStatusItem itemName="Water Conductivity" :itemValue="props.data.waterConductivity.toString()">
                 <ElectricityIcon class="w-4 h-4" />
             </PlantStatusItem>
-            <PlantStatusItem itemName="Temperature" :itemValue="props.data.temperature.toString()">
+            <PlantStatusItem itemName="Temperature (°C)" :itemValue="props.data.temperature.toString()">
                 <TemperatureIcon class="w-4 h-4" />
             </PlantStatusItem>
             <PlantStatusItem itemName="Last Updated" :itemValue="props.data.lastUpdated">

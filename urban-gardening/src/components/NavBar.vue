@@ -7,6 +7,19 @@ const isActive = ref<Boolean>(true);
 </script>
 
 <template>
+  <div class="w-full py-2 px-10 text-white h-14 border-b fixed">
+    <div class="w-full flex items-center">
+      <div class="flex flex-grow gap-x-2 items-center">
+          <img class="w-10 h-10 rounded-full" src="../assets/navbar-logo.png" />
+          <router-link to="/" class="font-bold">Urban Gardening</router-link>
+      </div>
+        <router-link to="/profile">
+          <div class="text-lg hover:underline ease-in-out duration-300">Profile</div>
+      </router-link>
+    </div>
+  </div>
+</template>
+<!-- <template>
     <div class="background-color w-60 p-4 text-white shadow-md h-screen relative">
       <div class="flex flex-col">
           <div class="w-full text-center">
@@ -24,7 +37,7 @@ const isActive = ref<Boolean>(true);
           </div>
       </div>
     </div>
-</template>
+</template> -->
 
 
 <style>
