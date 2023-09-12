@@ -38,14 +38,14 @@ const emitDropdownItem = (item: DropDownData): void => {
   </button>
   
   <!-- Dropdown menu -->
-  <div v-if="isActive" id="dropdown" class="text-black top-11 absolute h-40 z-10 shadow w-44">
-    <div class="py-2 text-sm bg-white rounded-lg">
+  <div v-if="isActive" class="text-black top-11 absolute h-40 z-10">
+    <div class="py-2 text-sm bg-white rounded-lg border border-gray-500">
       <div  v-if="props.data?.length > 0">
-        <div v-for="item in props.data" :key="item.id">
-          <div @click="emitDropdownItem(item)" class="block px-4 py-2 dark:hover:bg-gray-200 cursor-pointer">{{ item.itemName }}</div>
+        <div v-for="(item, index) in props.data" :key="item.id">
+          <div @click="emitDropdownItem(item)" :class="`${index == props.data.length - 1 ? '' : 'border-b border-gray-200'} block px-4 py-2 dark:hover:bg-gray-200 cursor-pointer`">{{ item.itemName }}</div>
         </div>
       </div>
-      <div v-else>
+      <div class="text-center" v-else>
         No items to display!
       </div>
     </div>

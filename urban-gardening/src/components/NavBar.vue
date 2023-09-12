@@ -1,20 +1,13 @@
 <script setup lang="ts">
 import UserIcon from './icons/UserIcon.vue';
-import ArrowIcon from "./icons/ArrowIcon.vue";
 import { ref } from 'vue';
 
 const isActive = ref<Boolean>(true);
 
-const toggleNavbar = () => {
-    isActive.value = !isActive.value
-}
 </script>
 
 <template>
-    <div :class="isActive ? 'w-60' : 'w-20'" class="bg-green-500 p-4 text-white shadow-md h-screen relative transition-width duration-200">
-    <div v-if="false" @click="toggleNavbar" class="absolute -right-3 bg-green-500 rounded-full p-1 border">
-        <ArrowIcon :class="`w-4 h-4 text-light duration-300 ease-in-out ${isActive ? '' : '-rotate-180'}`" />
-    </div>
+    <div class="background-color w-60 p-4 text-white shadow-md h-screen relative">
       <div class="flex flex-col">
           <div class="w-full text-center">
             <div class="flex gap-x-2 items-center">
@@ -32,3 +25,12 @@ const toggleNavbar = () => {
       </div>
     </div>
 </template>
+
+
+<style>
+.background-color {
+    background: linear-gradient(107deg, rgb(13, 198, 180) 8.1%, rgb(33, 198, 138) 79.5%);
+    /* background: linear-gradient(180deg, #00cdac 0%, #8ddad5 100%); */
+    /* background: linear-gradient(20deg, rgb(224, 235, 213) 8.1%, rgb(37, 148, 141) 91.2%); */
+}
+</style>
