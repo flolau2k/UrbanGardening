@@ -1,5 +1,7 @@
+
+<script setup lang="ts">
+  import StatusSquare from '../components/status.vue';
+</script>
 <template>
-  <div class="text-red-500">
-    <!-- he -->
-  </div>
+  <StatusSquare />
 </template>
