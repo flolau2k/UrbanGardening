@@ -12,7 +12,7 @@ const toggleNavbar = () => {
 
 <template>
     <div :class="isActive ? 'w-60' : 'w-20'" class="bg-green-500 p-4 text-white shadow-md h-screen relative transition-width duration-200">
-    <div @click="toggleNavbar" class="absolute -right-3 bg-green-500 rounded-full p-1 border">
+    <div v-if="false" @click="toggleNavbar" class="absolute -right-3 bg-green-500 rounded-full p-1 border">
         <ArrowIcon :class="`w-4 h-4 text-light duration-300 ease-in-out ${isActive ? '' : '-rotate-180'}`" />
     </div>
       <div class="flex flex-col">
