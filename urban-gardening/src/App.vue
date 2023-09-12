@@ -4,9 +4,9 @@ import NavBar from './components/NavBar.vue';
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex w-full h-full">
     <NavBar />
-    <div class="p-5">
+    <div class="p-5 w-full h-full">
       <RouterView />
     </div>
   </div>
