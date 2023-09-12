@@ -2,9 +2,11 @@ from random import random
 from time import sleep
 import matplotlib.pyplot as plt
 from myPID import myPID
-
+from influx_client import influx_interface, Point
 
 pid = myPID(0.1, 100, -100, 0.5, 0, 0)
+
+influx = influx_interface()
 
 x = list(range(10))
 ph = 7
@@ -25,7 +27,12 @@ while (True):
         act = "PH up"
     elif inc < 0:
         act = "PH down"
-    print(f"ph = {ph:.2f}, act = {act}")
+    #print(f"ph = {ph:.2f}, act = {act}")
+    point = (
+        Point("pid_demo")
+        .field("fake_sensor", ph)
+    )
+    influx.write(point)
     ph += inc
     ph_hist.append(ph)
     if len(ph_hist) > 10:
