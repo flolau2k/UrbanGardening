@@ -18,7 +18,7 @@ const toggleNavbar = () => {
       <div class="flex flex-col">
           <div class="w-full text-center">
             <div class="flex gap-x-2 items-center">
-                <img class="mx-auto w-10 h-10 rounded-full" src="../assets/navbar-logo.png" />
+                <img class="w-10 h-10 rounded-full" src="../assets/navbar-logo.png" />
                 <a href="/" :class="`${isActive ? 'visible': 'invisible'} font-bold`">Urban Gardening</a>
             </div>
               <div class="bg-white my-5 w-full" style="height: 1px;"></div>
