@@ -12,15 +12,15 @@ const isActive = ref<Boolean>(true);
           <div class="w-full text-center">
             <div class="flex gap-x-2 items-center">
                 <img class="w-10 h-10 rounded-full" src="../assets/navbar-logo.png" />
-                <a href="/" :class="`${isActive ? 'visible': 'invisible'} font-bold`">Urban Gardening</a>
+                <router-link to="/" class="font-bold">Urban Gardening</router-link>
             </div>
               <div class="bg-white my-5 w-full" style="height: 1px;"></div>
-              <a href="/" class="flex gap-x-5 items-center group">
+              <router-link to="/profile" class="flex gap-x-5 items-center group">
                 <div>
                     <UserIcon class="w-5 h-5 text-white" />
                 </div>
-                <div :class="isActive ? 'inline-block group-hover:underline' : 'invisible'">Profile</div>
-            </a>
+                <div class="inline-block group-hover:underline">Profile</div>
+            </router-link>
           </div>
       </div>
     </div>
