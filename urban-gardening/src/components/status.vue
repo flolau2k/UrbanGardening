@@ -14,7 +14,7 @@
         </div>
         <div class="status-line">
             <i class="fas fa-sun"></i>
-            <span class="status-text">Total dissolved solids: {{ waterConductivity*0.64 }}(ppm)</span>
+            <span class="status-text">Total dissolved solids: {{ waterConductivity * 0.64}} ppm</span>
         </div>
         <div class="status-line">
             <i class="fas fa-thermometer-half"></i>
@@ -33,7 +33,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'StatusSquare',
     props: {
-        numPlants: {
+        kindPlants: {
             type: Number,
             required: false
         },
@@ -41,9 +41,13 @@ export default defineComponent({
             type: Number,
             required: false
         },
-        sunlightLevel: {
+        ph: {
             type: Number,
             required: false
+        },
+        waterConductivity: {
+            type: Number,
+            required: true
         },
         temperature: {
             type: Number,
