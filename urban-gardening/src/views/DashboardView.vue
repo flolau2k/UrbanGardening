@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
   import StatusComponent from '../components/StatusComponent.vue';
   import CameraComponent from '../components/CameraComponent.vue';
