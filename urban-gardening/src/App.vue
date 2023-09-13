@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import NavBar from './components/NavBar.vue';
+
+const route = useRoute();
 </script>
 
 <template>
-  <div class="w-full h-screen">
-    <NavBar />
-    <div class="px-5 pb-5 pt-20 w-full h-full">
+  <div :class="`w-full h-screen ${route.name != 'login' ? 'bg-colour' : 'bg-colour-login'}`">
+    <NavBar v-if="route.name != 'login'" />
+    <div :class="`px-5 pb-5 ${route.name != 'login' ? 'pt-20' : ''}  w-full h-full`">
       <RouterView />
     </div>
   </div>

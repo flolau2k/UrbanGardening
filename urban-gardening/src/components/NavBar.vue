@@ -42,7 +42,9 @@ const isActive = ref<Boolean>(true);
 
 <style>
 .background-color {
-    background: linear-gradient(107deg, rgb(13, 198, 180) 8.1%, rgb(33, 198, 138) 79.5%);
+  background-color: #03c8a8;
+  /* background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%); */
+    /* background: linear-gradient(107deg, rgb(13, 198, 180) 8.1%, rgb(33, 198, 138) 79.5%); */
     /* background: linear-gradient(180deg, #00cdac 0%, #8ddad5 100%); */
     /* background: linear-gradient(20deg, rgb(224, 235, 213) 8.1%, rgb(37, 148, 141) 91.2%); */
 }
