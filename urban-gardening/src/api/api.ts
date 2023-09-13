@@ -1,6 +1,8 @@
 export const fetchData = (apiUrl: string): any => {
   fetch(apiUrl, {
+    // The type of request we want to make
     method: 'GET',
+    // Not sure if needed or if we going to do this setup yet
     headers: {
       Authorization: 'Bearer ACCESS_TOKEN',
       'Content-Type': 'application/json'
@@ -21,11 +23,14 @@ export const fetchData = (apiUrl: string): any => {
 
 export const postData = (apiUrl: string, payload: any): any => {
   fetch(apiUrl, {
+    // The type of request we want to make
     method: 'POST',
+    // Not sure if needed or if we going to do this setup yet
     headers: {
       Authorization: 'Bearer ACCESS_TOKEN',
       'Content-Type': 'application/json'
     },
+    // send the payload to the server
     body: JSON.stringify(payload)
   })
     .then((response: any) => response.json())
