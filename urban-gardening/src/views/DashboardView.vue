@@ -145,13 +145,15 @@ const plantTypeChange = (item: DropDownData): void => {
       <StatusComponent :data="mockDataPlantStatus" />
       <CameraComponent />
     </div>
-    <div class="w-1/2 h-2/3">
-      <ChartComponent
-        @update="updatePlant"
-        :type="graphType"
-        :dataSet="mockChartData"
-        :options="mockChartOptions"
-      />
+    <div class="flex justify-center">
+      <div class="w-2/3 h-2/3">
+        <ChartComponent
+          @update="updatePlant"
+          :type="graphType"
+          :dataSet="mockChartData"
+          :options="mockChartOptions"
+        />
+      </div>
     </div>
   </div>
 </template>
