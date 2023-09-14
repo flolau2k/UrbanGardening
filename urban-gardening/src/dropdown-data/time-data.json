@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "displayLabel": "5m",
+      "value": "5m"
+    },
+    {
+      "id": 2,
+      "displayLabel": "10m",
+      "value": "10m"
+    },
+    {
+      "id": 3,
+      "displayLabel": "20m",
+      "value": "20m"
+    },
+    {
+      "id": 4,
+      "displayLabel": "1h",
+      "value": "1h"
+    },
+    {
+      "id": 5,
+      "displayLabel": "1h30m",
+      "value": "1h30m"
+    },
+    {
+      "id": 6,
+      "displayLabel": "2h",
+      "value": "2h"
+    }
+  ]
+}
