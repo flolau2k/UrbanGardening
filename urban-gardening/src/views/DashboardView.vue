@@ -4,6 +4,7 @@
   import { StatusData } from '../../types/Status';
   import { ChartOptions, ChartData } from 'chart.js'
   import ChartComponent from '../components/ChartComponent.vue';
+import { DropDownData } from '../../types/DropDownData';
 
   const mockDataPlantStatus: StatusData = {kindOfPlants: 1, lastUpdated: new Date(), ph: 3, temperature: 36, waterConductivity: 2, waterLevel: 5}
 
@@ -49,6 +50,15 @@ const mockChartData: ChartData = {
   ]
 };
 
+const timeChange = (e: DropDownData): void => {
+  //
+}
+
+const dataChange = (e: DropDownData): void => {
+  //
+}
+
+
 const updatePlant = (): void => {
   // call api here and assign data
 }
@@ -59,7 +69,7 @@ const updatePlant = (): void => {
   <div class="w-full">
     <div class="flex w-full p-10 ">
       <div class="flex-grow">
-        <StatusComponent @updatePlant="updatePlant" :data="mockDataPlantStatus" />
+        <StatusComponent :data="mockDataPlantStatus" />
       </div>
       <div>
         <CameraComponent/>
@@ -67,14 +77,10 @@ const updatePlant = (): void => {
     </div>
     <div class="w-1/2 h-2/3">
       <ChartComponent
+        @time="timeChange"
+        @data-type="dataChange"
+        @update="updatePlant"
         type="line"
-        :dataSet="mockChartData"
-        :options="mockChartOptions"
-      />
-    </div>
-    <div class="mt-20 w-1/2 h-2/3">
-      <ChartComponent
-        type="bar"
         :dataSet="mockChartData"
         :options="mockChartOptions"
       />

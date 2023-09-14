@@ -7,7 +7,6 @@ import ChemicalIcon from './icons/ChemicalIcon.vue';
 import ElectricityIcon from './icons/ElectricityIcon.vue';
 import TemperatureIcon from './icons/TemperatureIcon.vue';
 import DownloadIcon from './icons/DownloadIcon.vue';
-import CustomButton from './CustomButton.vue';
 import DropDown from './DropDown.vue';
 import { DropDownData } from '../../types/DropDownData';
 
@@ -15,11 +14,6 @@ const props = defineProps<{
     data: StatusData,
   }>();
 
-const emit = defineEmits(["updatePlant"])
-
- const updatePlantStatus = (): void => {
-    emit("updatePlant");
- }
 
  const selectedPlant = (plant: DropDownData): void => {
     alert(`You selected ${plant.itemName}`);
@@ -60,11 +54,6 @@ const emit = defineEmits(["updatePlant"])
             <PlantStatusItem itemName="Last Updated" :itemValue="props.data.lastUpdated">
                 <DownloadIcon class="w-4 h-4" />
             </PlantStatusItem>
-        </div>
-        <div class="flex justify-center w-full pt-4">
-            <div>
-                <CustomButton @customClick="updatePlantStatus" buttonName="Update Now" />
-            </div>
         </div>
     </div>
 </template>
