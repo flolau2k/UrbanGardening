@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 __pycache__/
 urban-gardening
+=======
+docker_test/
+>>>>>>> feat/front-end
