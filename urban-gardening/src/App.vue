@@ -8,7 +8,7 @@ const route = useRoute();
 <template>
   <div :class="`w-full min-h-screen ${route.name != 'login' ? 'bg-colour' : 'bg-colour-login'}`">
     <NavBar v-if="route.name != 'login'" />
-    <div :class="`px-5 pb-5 ${route.name != 'login' ? 'pt-20' : ''}  w-full h-full`">
+    <div :class="`px-5 py-5 ${route.name != 'login' ? 'pt-15' : ''}  w-full h-full`">
       <RouterView />
     </div>
   </div>

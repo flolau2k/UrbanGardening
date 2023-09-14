@@ -11,7 +11,6 @@ const login = (): void => {
 
 </script>
 <template>
-  <div class="w-full h-full">
     <div class="flex justify-center items-center w-full h-full">
       <div class="w-1/2 h-1/2 bg-white rounded-lg grid grid-cols-2">
         <div
@@ -32,7 +31,7 @@ const login = (): void => {
                 <CustomInput label="Password" input-type="password" :is-required="true" />
               </div>
             </div>
-            <div class="pt-10 w-full flex justify-center">
+            <div class="pt-10 pb-2 w-full flex justify-center">
               <div class="w-40">
                 <CustomButton @customClick="login" button-name="Login" />
               </div>
@@ -41,5 +40,4 @@ const login = (): void => {
         </div>
       </div>
     </div>
-  </div>
 </template>

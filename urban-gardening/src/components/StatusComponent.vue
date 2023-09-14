@@ -61,8 +61,10 @@ const emit = defineEmits(["updatePlant"])
                 <DownloadIcon class="w-4 h-4" />
             </PlantStatusItem>
         </div>
-        <div class="flex justify-center pt-4">
-            <CustomButton @customClick="updatePlantStatus" buttonName="Update Now" />
+        <div class="flex justify-center w-full pt-4">
+            <div>
+                <CustomButton @customClick="updatePlantStatus" buttonName="Update Now" />
+            </div>
         </div>
     </div>
 </template>
