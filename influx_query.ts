@@ -2,7 +2,6 @@ const {InfluxDB, Point} = require('@influxdata/influxdb-client')
 
 const token = "tRMAaKRbbvAwfLBsDC2rWleCJZwVvtLpSzFPxv9byfX5KnTOhvztkiXeUpBnVknDqNUs4GEnrzK4ImdauoN-pg=="
 const url = 'http://localhost:8086'
-
 let org = `ug`
 
 const establishConnection = (token: string, url: string) => {
