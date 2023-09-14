@@ -1,4 +1,5 @@
 export interface DropDownData {
   id: number
-  itemName: string
+  value: string
+  displayLabel: string
 }
