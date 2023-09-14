@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import ChevronIcon from '../components/icons/ChevronIcon.vue'
 import { DropDownData } from '../../types/DropDownData'
 
@@ -13,10 +13,25 @@ const emit = defineEmits<{
 
 const isActive = ref<boolean>(false)
 const selectedValue = ref<string | null>(null)
+const dropdownRef = ref<HTMLDivElement | null>(null)
 
 const toggleDropDown = (): void => {
   isActive.value = !isActive.value
 }
+
+const handleOutsideClick = (event: MouseEvent) => {
+  if (dropdownRef.value && !dropdownRef.value.contains(event.target as Node)) {
+    isActive.value = false
+  }
+}
+
+onMounted(() => { 
+  document.addEventListener('click', handleOutsideClick)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleOutsideClick)
+})
 
 const emitDropdownItem = (item: DropDownData): void => {
   selectedValue.value = item.displayLabel
@@ -26,7 +41,7 @@ const emitDropdownItem = (item: DropDownData): void => {
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative" ref="dropdownRef">
     <button
       @click="toggleDropDown"
       :title="selectedValue ? selectedValue : dropdownName"
