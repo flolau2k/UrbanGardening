@@ -81,10 +81,10 @@ const establishConnection = (token: string, url: string) => {
 }
 
 onMounted(() => {
-  updatePlant()
+  fetchPlantData()
 })
 
-const updatePlant = (): void => {
+const fetchPlantData = (): void => {
   const tmpY: Array<number> = []
   const tmpX: Array<number> = []
 
@@ -140,7 +140,7 @@ const plantTypeChange = (item: DropDownData): void => {
         @selected-data-type="dataTypeChange"
         @selected-graph-type="graphTypeChange"
         @selected-time-data="timeChange"
-        @emit-data-fetch-click="updatePlant"
+        @emit-data-fetch-click="fetchPlantData"
       />
       <StatusComponent :data="mockDataPlantStatus" />
       <CameraComponent />
@@ -148,7 +148,7 @@ const plantTypeChange = (item: DropDownData): void => {
     <div class="flex justify-center">
       <div class="w-2/3 h-2/3">
         <ChartComponent
-          @update="updatePlant"
+          @update="fetchPlantData"
           :type="graphType"
           :dataSet="mockChartData"
           :options="mockChartOptions"
