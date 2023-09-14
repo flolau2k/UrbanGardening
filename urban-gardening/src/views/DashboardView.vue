@@ -44,18 +44,22 @@ const mockChartData: ChartData = {
       backgroundColor: 'rgb(45 212 191)',
       borderColor: 'rgba(75,192,192,1)',
       data: [120, 150, 170, 140, 180, 210, 220, 200, 240, 250, 230, 260],
-      // data: [20.1, 50.12, 60.1, 124.2, 4.1, 88.1, 69.9, 90.1, 100.765, 12.3, 98.12, 57.53],
       fill: false,
     }
   ]
 };
+
+const updatePlant = (): void => {
+  // call api here and assign data
+}
+
 </script>
 
 <template>
   <div class="w-full">
     <div class="flex w-full p-10 ">
       <div class="flex-grow">
-        <StatusComponent :data="mockDataPlantStatus" />
+        <StatusComponent @updatePlant="updatePlant" :data="mockDataPlantStatus" />
       </div>
       <div>
         <CameraComponent/>

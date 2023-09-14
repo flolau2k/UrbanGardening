@@ -15,8 +15,10 @@ const props = defineProps<{
     data: StatusData,
   }>();
 
+const emit = defineEmits(["updatePlant"])
+
  const updatePlantStatus = (): void => {
-    alert("Not yet implemented!");
+    emit("updatePlant");
  }
 
  const selectedPlant = (plant: DropDownData): void => {
