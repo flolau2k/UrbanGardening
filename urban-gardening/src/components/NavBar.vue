@@ -8,7 +8,10 @@
         <router-link to="/" class="font-bold">Urban Gardening</router-link>
       </div>
       <router-link to="/profile">
-        <div class="text-lg hover:underline ease-in-out duration-300">Profile</div>
+        <div class="flex gap-x-1 items-center">
+          <img src="../assets/login-picture.png" class="h-10 w-10 rounded-full" />
+          <div>User</div>
+        </div>
       </router-link>
     </div>
   </div>
