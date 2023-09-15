@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - feature/backend
-    paths:
-      - 'backend/**'
 
 jobs:
   build:
@@ -22,6 +20,7 @@ jobs:
 
     - name: Install goimports
       run: go get golang.org/x/tools/cmd/goimports
+      working-directory: ./backend
 
     - name: Check formatting with goimports
       run: |
@@ -30,21 +29,27 @@ jobs:
           goimports -l .
           exit 1
         fi
+      working-directory: ./backend
 
     - name: Run tests
       run: go test ./...
+      working-directory: ./backend
 
     - name: Vet the code
       run: go vet ./...
+      working-directory: ./backend
 
     - name: Install golint
       run: go get -u golang.org/x/lint/golint
+      working-directory: ./backend
 
     - name: Lint the code
       run: golint -set_exit_status $(go list ./...)
+      working-directory: ./backend
 
     - name: Install gocyclo
       run: go get github.com/fzipp/gocyclo
+      working-directory: ./backend
 
     - name: Check cyclomatic complexity
       run: |
@@ -52,4 +57,5 @@ jobs:
           echo "CYCLO FAILED: cyclomatic complexity over 30"
           exit 1
         fi
+      working-directory: ./backend
 
