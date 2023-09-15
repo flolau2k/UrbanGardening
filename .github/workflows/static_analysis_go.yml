@@ -22,13 +22,14 @@ jobs:
       run: |
         go version
         go get -u golang.org/x/lint/golint
-      working-directory: ./backend
+        # working-directory: ./backend
 
     - name: run vet and lint
       run: |
+        cd backend
         go vet .
         golint .
-      working-directory: ./backend
+        # working-directory: ./backend
 
         # - name: Add GOPATH/bin to PATH
         #       run: echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
