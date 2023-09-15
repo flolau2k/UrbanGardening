@@ -1,14 +1,13 @@
 package main
 
 import (
-	_ "context"
 	"fmt"
-	_ "log"
-	_ "os"
+	"net/http"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
+	"github.com/influxdata/influxdb-client-go/v2/api"
 )
 
 const (
@@ -17,15 +16,25 @@ const (
     org = "ug"
 )
 
-func main() {
-	r := gin.Default()
-	r.Use(cors.Default())
+func unfoldRequestQuery(c *gin.Context) (string, string, string) {
+	bucketName := c.DefaultQuery("bucket", "garden")
+	startTime := c.DefaultQuery("time", "15m")
+	measurement := c.DefaultQuery("measurement", "pH_Sensor")
+	return bucketName, startTime, measurement
+}
 
-	r.GET("/data", func(c *gin.Context) {
-		bucketName := c.DefaultQuery("bucket", "garden")
-		startTime := c.DefaultQuery("time", "15m")
-		measurement := c.DefaultQuery("measurement", "pH_Sensor")
+func createReturnData(r *api.QueryTableResult) []interface{} {
+	var data []interface{}
+	 for r.Next() {
+		record := r.Record()
+		values := record.Values()
+		data = append(data, values)
+	 }
+	 return data
+}
 
+func handleChartData(c *gin.Context) {
+		bucketName, startTime, measurement := unfoldRequestQuery(c)
 		client := influxdb2.NewClient(url, token)
 		queryAPI := client.QueryAPI(org)
 
@@ -33,25 +42,26 @@ func main() {
 					|> range(start: -%s)
 					|> filter(fn: (r) => r._measurement == "%s")`,
 				bucketName, startTime, measurement)
-
 		result, err := queryAPI.Query(c, query)
 		if err != nil {
-			c.JSON(500, gin.H{"error": "Failed to query InfluxDB"})
+			c.JSON(http.StatusInternalServerError,
+			gin.H{"error": "Failed to query InfluxDB"})
+			return
 		}
-		 var data []interface{}
-		 for result.Next() {
-			record := result.Record()
-			values := record.Values()
-			data = append(data, values)
-		 }
+		data := createReturnData(result)
+		if result.Err() != nil {
+			c.JSON(http.StatusInternalServerError,
+			gin.H{"error": fmt.Sprintf("Failed to read data: %s", result.Err().Error())})
+			return
+		}
+		c.JSON(http.StatusOK, data)
+}
 
-		 if result.Err() != nil {
-			 c.JSON(500, gin.H{"error": fmt.Sprintf("Failed to read data: %s", result.Err().Error())})
-		 }
+func main() {
+	r := gin.Default()
+	r.Use(cors.Default())
 
-		 c.JSON(200, data)
-	})
-
+	r.GET("/data", handleChartData)
 
     // results, err := queryAPI.Query(context.Background(), query)
     // if err != nil {
@@ -68,4 +78,5 @@ func main() {
     // if err := results.Err(); err != nil {
     //     log.Fatal(err)
     // }
+	r.Run(":8081")
 }

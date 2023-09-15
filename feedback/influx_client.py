@@ -19,7 +19,8 @@ class influx_interface():
         self.token = "tRMAaKRbbvAwfLBsDC2rWleCJZwVvtLpSzFPxv9byfX5KnTOhvztkiXeUpBnVknDqNUs4GEnrzK4ImdauoN-pg=="
         self.org = "ug"
         self.url = "http://localhost:8086"
-        self.client = InfluxDBClient(url=self.url, token=self.token, org=self.org)
+        self.client = InfluxDBClient(url=self.url,
+                                     token=self.token, org=self.org)
         self.write_api = self.client.write_api(write_options=SYNCHRONOUS)
         self.query_api = self.client.query_api()
         self.bucket = "garden"
@@ -33,3 +34,13 @@ class influx_interface():
         # self.logger.info(f"processing query: {query}")
         tables = self.query_api.query(query, org=self.org)
         return tables
+
+    def create_point(self, name: str, measurement: str, tag: str,
+                     value: float):
+        point = (Point(f"{name}")
+                 .measurement(f"{measurement}")
+                 .tag("sensor_id", f"{tag}")
+                 .tag("bucket", f"{self.bucket}")
+                 .field("value", value)
+                 )
+        return point

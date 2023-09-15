@@ -2,7 +2,7 @@ from random import random
 from time import sleep
 # import matplotlib.pyplot as plt
 from myPID import myPID
-from influx_client import influx_interface, Point
+from influx_client import influx_interface  # , Point
 
 pid = myPID(0.1, 100, -100, 0.5, 0, 0)
 
@@ -28,11 +28,12 @@ while (True):
     elif inc < 0:
         act = "PH down"
     # print(f"ph = {ph:.2f}, act = {act}")
-    point = (Point("pH_Sensor")
-             .measurement("pH_Sensor")
-             .tag("sensor_id", "001")
-             .field("value", ph)
-             )
+    point = influx.create_point("pH_sensor", "pH_sensor", "001", ph)
+    # point = (Point("pH_Sensor")
+    #          .measurement("pH_Sensor")
+    #          .tag("sensor_id", "001")
+    #          .field("value", ph)
+    #          )
     influx.write(point)
     ph += inc
     # ph_hist.append(ph)
