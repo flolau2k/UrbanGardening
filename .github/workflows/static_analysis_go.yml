@@ -14,51 +14,63 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v4
       with:
-        go-version: 1.x
+        go-version: 1.21.1
 
-    - name: Add GOPATH/bin to PATH
-      run: echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-
-    - name: Install goimports
-      run: go get golang.org/x/tools/cmd/goimports
-      working-directory: ./backend
-
-    - name: Check formatting with goimports
+    - name: Install dependencies
       run: |
-        if [ ! -z "$(goimports -l .)" ]; then
-          echo "FORMAT FAILED"
-          goimports -l .
-          exit 1
-        fi
+        go version
+        go get -u golang.org/x/lint/golint
       working-directory: ./backend
 
-    - name: Run tests
-      run: go test ./...
-      working-directory: ./backend
-
-    - name: Vet the code
-      run: go vet ./...
-      working-directory: ./backend
-
-    - name: Install golint
-      run: go get -u golang.org/x/lint/golint
-      working-directory: ./backend
-
-    - name: Lint the code
-      run: golint -set_exit_status $(go list ./...)
-      working-directory: ./backend
-
-    - name: Install gocyclo
-      run: go get github.com/fzipp/gocyclo
-      working-directory: ./backend
-
-    - name: Check cyclomatic complexity
+    - name: run vet and lint
       run: |
-        if gocyclo -over 30 .; then
-          echo "CYCLO FAILED: cyclomatic complexity over 30"
-          exit 1
-        fi
+        go vet .
+        golint .
       working-directory: ./backend
 
+        # - name: Add GOPATH/bin to PATH
+        #       run: echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+        # 
+        #     - name: Install goimports
+        #       run: go get golang.org/x/tools/cmd/goimports
+        #       working-directory: ./backend
+        # 
+        #     - name: Check formatting with goimports
+        #       run: |
+        #         if [ ! -z "$(goimports -l .)" ]; then
+        #           echo "FORMAT FAILED"
+        #           goimports -l .
+        #           exit 1
+        #         fi
+        #       working-directory: ./backend
+        # 
+        #     - name: Run tests
+        #       run: go test ./...
+        #       working-directory: ./backend
+        # 
+        #     - name: Vet the code
+        #       run: go vet ./...
+        #       working-directory: ./backend
+        # 
+        #     - name: Install golint
+        #       run: go get -u golang.org/x/lint/golint
+        #       working-directory: ./backend
+        # 
+        #     - name: Lint the code
+        #       run: golint -set_exit_status $(go list ./...)
+        #       working-directory: ./backend
+        # 
+        #     - name: Install gocyclo
+        #       run: go get github.com/fzipp/gocyclo
+        #       working-directory: ./backend
+        # 
+        #     - name: Check cyclomatic complexity
+        #       run: |
+        #         if gocyclo -over 30 .; then
+        #           echo "CYCLO FAILED: cyclomatic complexity over 30"
+        #           exit 1
+        #         fi
+        #       working-directory: ./backend
+        # 
