@@ -1,0 +1,53 @@
+name: Go CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.x
+
+    - name: Install goimports
+      run: go get golang.org/x/tools/cmd/goimports
+
+    - name: Check formatting with goimports
+      run: |
+        if [ ! -z "$(goimports -l .)" ]; then
+          echo "FORMAT FAILED"
+          goimports -l .
+          exit 1
+        fi
+
+    - name: Run tests
+      run: go test ./...
+
+    - name: Vet the code
+      run: go vet ./...
+
+    - name: Install golint
+      run: go get -u golang.org/x/lint/golint
+
+    - name: Lint the code
+      run: golint -set_exit_status $(go list ./...)
+
+    - name: Install gocyclo
+      run: go get github.com/fzipp/gocyclo
+
+    - name: Check cyclomatic complexity
+      run: |
+        if gocyclo -over 30 .; then
+          echo "CYCLO FAILED: cyclomatic complexity over 30"
+          exit 1
+        fi
+
