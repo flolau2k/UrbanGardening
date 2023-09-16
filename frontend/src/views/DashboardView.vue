@@ -9,6 +9,7 @@ import { DropDownData } from '../../types/DropDownData'
 import { onMounted, ref } from 'vue'
 import ConfigCard from '../components/ConfigCard.vue'
 import axiosInstance from '../api/axiosInstance'
+import CustomButton from '../components/CustomButton.vue'
 
 const mockDataPlantStatus: StatusData = {
   kindOfPlants: 1,
@@ -81,15 +82,18 @@ const establishConnection = (token: string, url: string) => {
   return client
 }
 
-onMounted(async() => {
+onMounted(() => {
   fetchPlantData()
+})
+
+const getData = async () => {
   try {
-        const response = await axiosInstance.get('/my-end-point');
+        const response = await axiosInstance.get('/example');
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-})
+}
 
 const fetchPlantData = (): void => {
   const tmpY: Array<number> = []
@@ -147,7 +151,7 @@ const plantTypeChange = (item: DropDownData): void => {
         @selected-data-type="dataTypeChange"
         @selected-graph-type="graphTypeChange"
         @selected-time-data="timeChange"
-        @emit-data-fetch-click="fetchPlantData"
+        @emit-data-fetch-click="getData"
       />
       <StatusComponent :data="mockDataPlantStatus" />
       <CameraComponent />
