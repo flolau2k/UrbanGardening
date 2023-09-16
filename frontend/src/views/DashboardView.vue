@@ -40,29 +40,34 @@ const chartOptions: ChartOptions = {
     },
     title: {
       display: true,
-      text: 'Graph showing data :)'
+      text: 'A graph ¯\\_(ツ)_/¯'
     }
   }
 }
 
-const getChartData = (tmpY: Array<number>, tmpX: Array<number>): ChartData => {
+const updateChartData = (yValues: Array<number>, xValues: Array<number>): ChartData => {
   return {
-    labels: tmpX,
+    labels: xValues,
     datasets: [
       {
         label: 'Dataset',
         backgroundColor: 'rgb(45 212 191)',
         borderColor: 'rgba(75,192,192,1)',
-        data: tmpY,
+        data: yValues,
         fill: false
       }
     ]
   }
 }
 
-const chartData = ref<ChartData>(getChartData([], []))
+const chartData = ref<ChartData>(updateChartData([], []))
 
 const fetchChartData = async () => {
+  // Check the inputs/params before making request
+  if (!timeRange.value || !dataType.value) {
+    alert('Please select a time range and data type!')
+    return ;
+  }
   try {
     const response = await axiosInstance.get('/chart-data', {
       params: {
@@ -71,9 +76,11 @@ const fetchChartData = async () => {
         measurement: dataType.value.value
       }
     })
-    chartData.value = getChartData(response.data.yValues, response.data.xValues)
+    // Update the chart component with new data recieved from server
+    chartData.value = updateChartData(response.data.yValues, response.data.xValues)
   } catch (error) {
     console.error('Error fetching data:', error)
+    alert("Error when fetching data! Check the console for more information.");
   }
 }
 
@@ -97,7 +104,7 @@ const fetchChartData = async () => {
 //     },
 //     complete: () => {
 //       // console.log('\nSuccess');
-//       mockChartData.value = getChartData(tmpY, tmpX)
+//       mockChartData.value = updateChartData(tmpY, tmpX)
 //       // console.log(mockChartData.value)
 //     }
 //   })
@@ -118,6 +125,7 @@ const dataTypeChange = (item: DropDownData): void => {
 const graphTypeChange = (item: DropDownData): void => {
   if (isChartType(item.value)){
     graphType.value = item.value as ChartType;
+    // Set new graph type in localstorage
     localStorage.setItem("graphType", item.value);
   } 
   else alert('Invalid chart type!')
@@ -128,6 +136,7 @@ const plantTypeChange = (item: DropDownData): void => {
 }
 
 onMounted(() => {
+  // Check if there is agraph type stored in localstorage
   const storedGraphType = localStorage.getItem('graphType');
   if (storedGraphType) {
     graphType.value = storedGraphType as ChartType
