@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+	_ "strconv"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -23,14 +25,18 @@ func unfoldRequestQuery(c *gin.Context) (string, string, string) {
 	return bucketName, startTime, measurement
 }
 
-func createReturnData(r *api.QueryTableResult) []interface{} {
-	var data []interface{}
+func createReturnData(r *api.QueryTableResult) ([]float64, []interface{}) {
+	var data []float64
+	var timestamp []interface{}
+
 	 for r.Next() {
 		record := r.Record()
-		values := record.Values()
-		data = append(data, values)
+		value := record.Value()
+        data = append(data, value.(float64))
+        currentTime := time.Now().UnixMilli() / 1000
+        timestamp = append(timestamp, (record.Time().UnixMilli() / 1000) - currentTime)
 	 }
-	 return data
+	 return data, timestamp
 }
 
 func handleChartData(c *gin.Context) {
@@ -48,20 +54,23 @@ func handleChartData(c *gin.Context) {
 			gin.H{"error": "Failed to query InfluxDB"})
 			return
 		}
-		data := createReturnData(result)
+		data, timestamp := createReturnData(result)
 		if result.Err() != nil {
 			c.JSON(http.StatusInternalServerError,
 			gin.H{"error": fmt.Sprintf("Failed to read data: %s", result.Err().Error())})
 			return
 		}
-		c.JSON(http.StatusOK, data)
+		c.JSON(http.StatusOK, gin.H{
+            "yValues": data,
+            "xValues": timestamp,
+        })
 }
 
 func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	r.GET("/data", handleChartData)
+	r.GET("/chart-data", handleChartData)
 
     // results, err := queryAPI.Query(context.Background(), query)
     // if err != nil {

@@ -4,11 +4,11 @@ import CameraComponent from '../components/CameraComponent.vue'
 import { StatusData } from '../../types/Status'
 import { ChartOptions, ChartData, ChartType } from 'chart.js'
 import ChartComponent from '../components/ChartComponent.vue'
-import { InfluxDB } from '@influxdata/influxdb-client-browser'
 import { DropDownData } from '../../types/DropDownData'
 import { onMounted, ref } from 'vue'
 import ConfigCard from '../components/ConfigCard.vue'
 import axiosInstance from '../api/axiosInstance'
+import { customChartData } from '../../types/ChartData'
 import CustomButton from '../components/CustomButton.vue'
 
 const mockDataPlantStatus: StatusData = {
@@ -25,19 +25,14 @@ const dataType = ref<DropDownData>()
 const plantType = ref<DropDownData>()
 const timeRange = ref<DropDownData>()
 
-const token =
-  'tRMAaKRbbvAwfLBsDC2rWleCJZwVvtLpSzFPxv9byfX5KnTOhvztkiXeUpBnVknDqNUs4GEnrzK4ImdauoN-pg=='
-const url = 'http://localhost:8086'
-const org = `ug`
-const currentTime = new Date()
 
-const mockChartOptions: ChartOptions = {
+const chartOptions: ChartOptions = {
   responsive: true,
   scales: {
     x: {
       title: {
         display: true,
-        text: 'Value'
+        text: 'Timestamp'
       }
     }
   },
@@ -68,58 +63,50 @@ const getChartData = (tmpY: Array<number>, tmpX: Array<number>): ChartData => {
   }
 }
 
-const mockChartData = ref<ChartData>(getChartData([], []))
+const chartData = ref<ChartData>(getChartData([], []))
 
-const createQuery = (bucketName: string, dataFilter: string, startTime: string): string => {
-  const queryRange = `start: -${startTime}`
-  return `from(bucket: "${bucketName}")
-     |> range(${queryRange})
-     |> filter(fn: (r) => r._measurement == "${dataFilter}")`
-}
-
-const establishConnection = (token: string, url: string) => {
-  const client = new InfluxDB({ url, token })
-  return client
-}
-
-onMounted(() => {
-  fetchPlantData()
-})
-
-const getData = async () => {
+const fetchChartData = async () => {
   try {
-        const response = await axiosInstance.get('/example');
-        console.log(response.data);
+        const response = await axiosInstance.get('/chart-data', {
+            params: {
+            bucketName: "garden",
+            startTime: timeRange.value.value,
+            measurement: "pH_Sensor"
+            }
+        });
+        chartData.value = getChartData(response.data.yValues, response.data.xValues)
+        console.log(response.data.xValues)
+        console.log(response.data.yValues)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
 }
 
-const fetchPlantData = (): void => {
-  const tmpY: Array<number> = []
-  const tmpX: Array<number> = []
+// const fetchPlantData = (): void => {
+//   const tmpY: Array<number> = []
+//   const tmpX: Array<number> = []
 
-  const client = establishConnection(token, url)
-  const fluxQuery = createQuery('garden', 'pH_Sensor', '5m')
-  const queryClient = client.getQueryApi(org)
+//   const client = establishConnection(token, url)
+//   const fluxQuery = createQuery('garden', 'pH_Sensor', '5m')
+//   const queryClient = client.getQueryApi(org)
 
-  queryClient.queryRows(fluxQuery, {
-    next: (row: any, tableMeta: any) => {
-      const tableObject = tableMeta.toObject(row)
-      const d = new Date(tableObject['_time'])
-      tmpY.push(Number(tableObject['_value']))
-      tmpX.push(d.getTime() - currentTime.getTime())
-    },
-    error: (error: any) => {
-      console.error('\nError', error)
-    },
-    complete: () => {
-      // console.log('\nSuccess');
-      mockChartData.value = getChartData(tmpY, tmpX)
-      // console.log(mockChartData.value)
-    }
-  })
-}
+//   queryClient.queryRows(fluxQuery, {
+//     next: (row: any, tableMeta: any) => {
+//       const tableObject = tableMeta.toObject(row)
+//       const d = new Date(tableObject['_time'])
+//       tmpY.push(Number(tableObject['_value']))
+//       tmpX.push(d.getTime() - currentTime.getTime())
+//     },
+//     error: (error: any) => {
+//       console.error('\nError', error)
+//     },
+//     complete: () => {
+//       // console.log('\nSuccess');
+//       mockChartData.value = getChartData(tmpY, tmpX)
+//       // console.log(mockChartData.value)
+//     }
+//   })
+// }
 
 const isChartType = (value: string): value is ChartType => {
   return ['line', 'bar'].includes(value)
@@ -151,7 +138,7 @@ const plantTypeChange = (item: DropDownData): void => {
         @selected-data-type="dataTypeChange"
         @selected-graph-type="graphTypeChange"
         @selected-time-data="timeChange"
-        @emit-data-fetch-click="getData"
+        @emit-data-fetch-click="fetchChartData"
       />
       <StatusComponent :data="mockDataPlantStatus" />
       <CameraComponent />
@@ -159,10 +146,9 @@ const plantTypeChange = (item: DropDownData): void => {
     <div class="flex justify-center">
       <div class="w-2/3 h-2/3">
         <ChartComponent
-          @update="fetchPlantData"
           :type="graphType"
-          :dataSet="mockChartData"
-          :options="mockChartOptions"
+          :dataSet="chartData"
+          :options="chartOptions"
         />
       </div>
     </div>
