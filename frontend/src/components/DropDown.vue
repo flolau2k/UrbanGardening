@@ -25,7 +25,7 @@ const handleOutsideClick = (event: MouseEvent) => {
   }
 }
 
-onMounted(() => { 
+onMounted(() => {
   document.addEventListener('click', handleOutsideClick)
 })
 

@@ -36,7 +36,6 @@ Chart.register(
 )
 
 const chartElement = ref<HTMLCanvasElement | null>(null)
-const emit = defineEmits(['update'])
 let chartInstance: Chart | null = null
 
 const props = defineProps({
@@ -70,20 +69,10 @@ onUnmounted(() => {
     chartInstance.destroy()
   }
 })
-
-const emitUpdate = (): void => {
-  emit('update')
-}
 </script>
 
 <template>
   <div class="bg-white p-4 rounded-lg">
-    <!-- TODO: REMOVE -->
-    <div class="flex justify-end pb-5">
-      <div>
-        <CustomButton @custom-click="emitUpdate" button-name="Update" />
-      </div>
-    </div>
     <canvas class="z-30" ref="chartElement"></canvas>
   </div>
 </template>
