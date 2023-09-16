@@ -8,8 +8,6 @@ import { DropDownData } from '../../types/DropDownData'
 import { onMounted, ref } from 'vue'
 import ConfigCard from '../components/ConfigCard.vue'
 import axiosInstance from '../api/axiosInstance'
-import { customChartData } from '../../types/ChartData'
-import CustomButton from '../components/CustomButton.vue'
 
 const mockDataPlantStatus: StatusData = {
   kindOfPlants: 1,
@@ -24,7 +22,6 @@ const graphType = ref<ChartType>('line')
 const dataType = ref<DropDownData>()
 const plantType = ref<DropDownData>()
 const timeRange = ref<DropDownData>()
-
 
 const chartOptions: ChartOptions = {
   responsive: true,
@@ -67,19 +64,17 @@ const chartData = ref<ChartData>(getChartData([], []))
 
 const fetchChartData = async () => {
   try {
-        const response = await axiosInstance.get('/chart-data', {
-            params: {
-            bucketName: "garden",
-            startTime: timeRange.value.value,
-            measurement: "pH_Sensor"
-            }
-        });
-        chartData.value = getChartData(response.data.yValues, response.data.xValues)
-        console.log(response.data.xValues)
-        console.log(response.data.yValues)
-      } catch (error) {
-        console.error('Error fetching data:', error);
+    const response = await axiosInstance.get('/chart-data', {
+      params: {
+        bucketName: 'garden',
+        startTime: timeRange.value.value,
+        measurement: dataType.value.value
       }
+    })
+    chartData.value = getChartData(response.data.yValues, response.data.xValues)
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
 }
 
 // const fetchPlantData = (): void => {
@@ -121,13 +116,24 @@ const dataTypeChange = (item: DropDownData): void => {
 }
 
 const graphTypeChange = (item: DropDownData): void => {
-  if (isChartType(item.value)) graphType.value = item.value as ChartType
+  if (isChartType(item.value)){
+    graphType.value = item.value as ChartType;
+    localStorage.setItem("graphType", item.value);
+  } 
   else alert('Invalid chart type!')
 }
 
 const plantTypeChange = (item: DropDownData): void => {
   plantType.value = item
 }
+
+onMounted(() => {
+  const storedGraphType = localStorage.getItem('graphType');
+  if (storedGraphType) {
+    graphType.value = storedGraphType as ChartType
+  }
+})
+
 </script>
 
 <template>
@@ -145,11 +151,7 @@ const plantTypeChange = (item: DropDownData): void => {
     </div>
     <div class="flex justify-center">
       <div class="w-2/3 h-2/3">
-        <ChartComponent
-          :type="graphType"
-          :dataSet="chartData"
-          :options="chartOptions"
-        />
+        <ChartComponent :type="graphType" :dataSet="chartData" :options="chartOptions" />
       </div>
     </div>
   </div>
