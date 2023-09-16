@@ -8,6 +8,7 @@ import { InfluxDB } from '@influxdata/influxdb-client-browser'
 import { DropDownData } from '../../types/DropDownData'
 import { onMounted, ref } from 'vue'
 import ConfigCard from '../components/ConfigCard.vue'
+import axiosInstance from '../api/axiosInstance'
 
 const mockDataPlantStatus: StatusData = {
   kindOfPlants: 1,
@@ -80,8 +81,14 @@ const establishConnection = (token: string, url: string) => {
   return client
 }
 
-onMounted(() => {
+onMounted(async() => {
   fetchPlantData()
+  try {
+        const response = await axiosInstance.get('/my-end-point');
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
 })
 
 const fetchPlantData = (): void => {
