@@ -70,7 +70,7 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	r.GET("/chart-data", handleChartData)
+	r.GET("/api/chart-data", handleChartData)
 
     // results, err := queryAPI.Query(context.Background(), query)
     // if err != nil {

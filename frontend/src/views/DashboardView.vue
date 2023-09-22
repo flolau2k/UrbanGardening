@@ -69,7 +69,7 @@ const fetchChartData = async () => {
     return ;
   }
   try {
-    const response = await axiosInstance.get('/chart-data', {
+    const response = await axiosInstance.get('/api/chart-data', {
       params: {
         bucketName: 'garden',
         startTime: timeRange.value.value,
