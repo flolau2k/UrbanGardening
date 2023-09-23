@@ -71,7 +71,7 @@ func main() {
 	r.Use(cors.Default())
 
 	r.GET("/api/chart-data", handleChartData)
-
+    fmt.Println("HELLL")
     // results, err := queryAPI.Query(context.Background(), query)
     // if err != nil {
     //     log.Fatal(err)
