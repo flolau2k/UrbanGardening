@@ -1,30 +1,29 @@
-name: Tests
+name: Go Static Check
 
 on:
   push:
-    branches: [ "feature/backend" ]
+    branches: [ feature/backend ]
 
 jobs:
-  test:
-    name: Test
+  staticcheck:
+    name: Run staticcheck
     runs-on: ubuntu-latest
-    env:
-      GOPROXY: "https://proxy.golang.org,direct"
-
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: "1.20"
-        id: go
+    - name: Check out code
+      uses: actions/checkout@v2
 
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
+    - name: Setup Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.20
 
-      - name: install staticcheck
-        run: |
-          cd /tmp && go install honnef.co/go/tools/cmd/staticcheck@latest
+    - name: Change to Go code directory
+      run: cd backend
 
-      - name: Make tests
-        run: |
-          make
+    - name: Install staticcheck
+      run: go get honnef.co/go/tools/cmd/staticcheck
+
+
+    - name: Run staticcheck
+      run: staticcheck ./...
+
