@@ -8,6 +8,9 @@ jobs:
   staticcheck:
     name: Run staticcheck
     runs-on: ubuntu-latest
+    env:
+      GOPROXY: "https://proxy.golang.org,direct"
+
     steps:
     - name: Check out code
       uses: actions/checkout@v2
@@ -15,7 +18,8 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.20
+        go-version: "1.20"
+      id: go
 
     - name: Change to Go code directory
       run: cd backend
