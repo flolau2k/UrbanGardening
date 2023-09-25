@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onUnmounted, defineProps, watchEffect } from 'vue'
+import { ref, onUnmounted, watchEffect } from 'vue'
+import type { ChartData, ChartOptions, ChartType } from 'chart.js';
 import {
   Chart,
   LineController,
@@ -9,16 +10,12 @@ import {
   LinearScale,
   Title,
   Legend,
-  ChartData,
-  ChartOptions,
   PointElement,
-  ChartType,
   LineElement,
   BarElement,
   Filler,
   Tooltip
 } from 'chart.js'
-import CustomButton from './CustomButton.vue'
 
 Chart.register(
   LineController,
@@ -56,11 +53,13 @@ watchEffect(async () => {
     if (chartInstance) {
       chartInstance.destroy()
     }
+    if (ctx) {
     chartInstance = new Chart(ctx, {
       type: props.type,
       data: props.dataSet,
-      options: props.options
+      options: props.options || undefined
     })
+    }
   }
 })
 

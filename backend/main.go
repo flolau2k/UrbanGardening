@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/http"
+	"os"
 	_ "strconv"
 	"time"
 
@@ -67,11 +69,22 @@ func handleChartData(c *gin.Context) {
 }
 
 func main() {
+    gin.SetMode(gin.ReleaseMode)
+    gin.DisableConsoleColor()
+
+    f, _ := os.Create("gin.log")
+    gin.DefaultWriter = io.MultiWriter(f)
 	r := gin.Default()
+    
 	r.Use(cors.Default())
+    r.Use(gin.Recovery())
 
 	r.GET("/api/chart-data", handleChartData)
-    fmt.Println("HELLL")
+    r.GET("/api/example", func(ctx *gin.Context) {
+        ctx.JSON(http.StatusOK, gin.H{
+            "message": "pong",
+        })
+    })
     // results, err := queryAPI.Query(context.Background(), query)
     // if err != nil {
     //     log.Fatal(err)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import ChevronIcon from '../components/icons/ChevronIcon.vue'
-import { DropDownData } from '../../types/DropDownData'
+import type { DropDownData } from '../../types/DropDownData'
 
 const props = defineProps<{
   data: Array<DropDownData>

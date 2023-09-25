@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { StatusData } from '../../types/Status'
+import type { StatusData } from '../../types/Status'
 import StatusIcon from '../components/icons/StatusIcon.vue'
 import PlantStatusItem from './PlantStatusItem.vue'
 import WaterIcon from './icons/WaterIcon.vue'

@@ -1,10 +1,10 @@
 <script setup lang="ts" type="module">
 import StatusComponent from '../components/StatusComponent.vue'
 import CameraComponent from '../components/CameraComponent.vue'
-import { StatusData } from '../../types/Status'
-import { ChartOptions, ChartData, ChartType } from 'chart.js'
+import type { StatusData } from '../../types/Status'
+import type { ChartOptions, ChartData, ChartType } from 'chart.js'
 import ChartComponent from '../components/ChartComponent.vue'
-import { DropDownData } from '../../types/DropDownData'
+import type { DropDownData } from '../../types/DropDownData'
 import { onMounted, ref } from 'vue'
 import ConfigCard from '../components/ConfigCard.vue'
 import axiosInstance from '../api/axiosInstance'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DropDown from './DropDown.vue'
 import SettingsIcon from './icons/SettingsIcon.vue'
-import { DropDownData } from '../../types/DropDownData'
+import type { DropDownData } from '../../types/DropDownData'
 import { onMounted, ref } from 'vue'
 import CustomButton from './CustomButton.vue'
 
