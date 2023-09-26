@@ -9,6 +9,7 @@ import { onMounted, ref } from 'vue'
 import ConfigCard from '../components/ConfigCard.vue'
 import axiosInstance from '../api/axiosInstance'
 
+
 const mockDataPlantStatus: StatusData = {
   kindOfPlants: 1,
   lastUpdated: new Date(),

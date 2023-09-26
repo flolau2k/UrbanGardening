@@ -1,4 +1,4 @@
-module influx_client
+module github.com/flolau2k/urbangardening/backend
 
 go 1.21.0
 

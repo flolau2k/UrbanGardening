@@ -2,8 +2,12 @@
 import DropDown from './DropDown.vue'
 import SettingsIcon from './icons/SettingsIcon.vue'
 import type { DropDownData } from '../../types/DropDownData'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import CustomButton from './CustomButton.vue'
+import plantTypeData from '@/dropdown-data/plant-type-data.json'
+import graphTypeData from '@/dropdown-data/graph-type-data.json'
+import timeDataJson from '@/dropdown-data/time-data.json'
+import dataTypeJson from '@/dropdown-data/data-type.json'
 
 const emit = defineEmits<{
   (event: 'selectedPlantType', selection: DropDownData): void
@@ -13,10 +17,10 @@ const emit = defineEmits<{
   (event: 'emitDataFetchClick'): void
 }>()
 
-const plantType = ref<DropDownData[]>([])
-const graphType = ref<DropDownData[]>([])
-const timeData = ref<DropDownData[]>([])
-const dataType = ref<DropDownData[]>([])
+const plantType = ref<DropDownData[]>(plantTypeData.data)
+const graphType = ref<DropDownData[]>(graphTypeData.data)
+const timeData = ref<DropDownData[]>(timeDataJson.data)
+const dataType = ref<DropDownData[]>(dataTypeJson.data)
 
 const emitSelectedPlantType = (selection: DropDownData): void => {
   emit('selectedPlantType', selection)
@@ -37,38 +41,6 @@ const emitSelectedDataType = (selection: DropDownData): void => {
 const emitDataFetchClick = (): void => {
   emit('emitDataFetchClick')
 }
-
-const getDropdownData = async (url: string): Promise<DropDownData[]> => {
-  try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      throw new Error('Failed to fetch data')
-    }
-    const jsonData = await response.json()
-    const data: DropDownData[] = jsonData.data
-    return data
-  } catch (error) {
-    console.error('Error fetching data:', error)
-    return []
-  }
-}
-
-onMounted(() => {
-  getDropdownData('../../src/dropdown-data/plant-type-data.json').then((data: DropDownData[]) => {
-    plantType.value = data
-  })
-
-  getDropdownData('../../src/dropdown-data/graph-type-data.json').then((data: DropDownData[]) => {
-    graphType.value = data
-  })
-
-  getDropdownData('../../src/dropdown-data/time-data.json').then((data: DropDownData[]) => {
-    timeData.value = data
-  })
-  getDropdownData('../../src/dropdown-data/data-type.json').then((data: DropDownData[]) => {
-    dataType.value = data
-  })
-})
 </script>
 
 <template>
