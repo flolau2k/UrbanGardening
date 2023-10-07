@@ -14,7 +14,7 @@ const login = (): void => {
     <div class="w-1/2 h-1/2 bg-white rounded-lg grid grid-cols-2">
       <div
         class="col-span-1 bg-center bg-cover rounded-l-lg"
-        style="background-image: url('../../src/assets/login-picture.png')"
+        style="background-image: url('/src/assets/login-picture.png')"
       ></div>
 
       <div class="flex justify-center col-span-1 pt-5">

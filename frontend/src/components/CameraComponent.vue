@@ -8,11 +8,12 @@ const startTimelapse = (): void => {
 }
 </script>
 
+//style="{ backgroundImage: 'url(${loginPicture})' }"
 <template>
   <div class="w-[420px] h-[230px] rounded-lg relative group">
     <div
       class="h-full w-full bg-center rounded-lg bg-cover z-0"
-      style="background-image: url('../../src/assets/login-picture.png')"
+      style="background-image: url('/src/assets/login-picture.png')"
     ></div>
     <div
       class="absolute inset-0 bg-black rounded-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300 z-10"
