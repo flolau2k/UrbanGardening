@@ -1,5 +1,14 @@
-# Urban Gardening
-*Software Repository for the Urban Gardening Project at [42 Heilbronn](https://www.42heilbronn.de/en/)*
+<p align="center">
+    <img src="42-forest.png" height="300">
+    <br>
+    <h1 align="center">
+    Urban Gardening
+    </h1>
+</p>
+<p align="center">
+        Software Repository for the Urban Gardening Project at
+    <a href="https://www.42heilbronn.de/en/">42 Heilbronn</a>
+</p>
 
 ## ≡ Table of Contents
 - [What is this project about?](#what-is-this-project-about)
@@ -29,6 +38,11 @@ We have currently finished **Stage 1** by creating a prototype of the website an
 4. **Controller**: <a href="https://skillicons.dev">
         <img src="https://skillicons.dev/icons?i=python" /></a>
 
+The nginx server and the Go backend (using Gin) are implemented as a systemd service to be constantly run in the background. Currently, we have no real sensors that are producing data to be written into the InfluxDB database. Therefore, we wrote a Python script, which is adding random values (-0.5 - 0.5) to a simulated pH-sensor, which will be controlled by our PID controller.
+
+<p align="center">
+    <img src="schematic.png" width="70%">
+<p>
 
 ## What is hydroponics?
 Hydroponics is a subset of hydroculture, which is a method of growing plants without the use of soil. Instead, plants are grown in an inert and sterile growing medium and nourished with a nutrient-rich water solution. This method allows plants to receive minerals and vitamins directly from the water, leading to faster growth and higher yields. Here are some key points about hydroponics:
