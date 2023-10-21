@@ -24,6 +24,10 @@ We have currently finished **Stage 1** by creating a prototype of the website an
         <img src="https://skillicons.dev/icons?i=vue,tailwind,typescript" /></a>
 2. Backend: <a href="https://skillicons.dev">
         <img src="https://skillicons.dev/icons?i=go" /></a>
+3. Webserver: <a href="https://skillicons.dev">
+        <img src="https://skillicons.dev/icons?i=nginx" /></a>
+3. Controller: <a href="https://skillicons.dev">
+        <img src="https://skillicons.dev/icons?i=python" /></a>
 
 ## What is hydroponics?
 Hydroponics is a subset of hydroculture, which is a method of growing plants without the use of soil. Instead, plants are grown in an inert and sterile growing medium and nourished with a nutrient-rich water solution. This method allows plants to receive minerals and vitamins directly from the water, leading to faster growth and higher yields. Here are some key points about hydroponics:
