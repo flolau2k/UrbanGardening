@@ -28,7 +28,7 @@ while (True):
     elif inc < 0:
         act = "PH down"
     # print(f"ph = {ph:.2f}, act = {act}")
-    point = influx.create_point("pH_Sensor", "pH_Sensor", "001", ph)
+    point = influx.create_point("pH_sensor", "pH_sensor", "001", ph)
     # point = (Point("pH_Sensor")
     #          .measurement("pH_Sensor")
     #          .tag("sensor_id", "001")
