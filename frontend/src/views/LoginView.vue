@@ -6,7 +6,7 @@ import CustomInput from '../components/CustomInput.vue'
 const router = useRouter()
 
 const login = (): void => {
-  router.push('/')
+  router.push('/dashboard')
 }
 </script>
 <template>

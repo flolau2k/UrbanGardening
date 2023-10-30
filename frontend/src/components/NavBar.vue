@@ -5,7 +5,7 @@
     <div class="w-full flex items-center">
       <div class="flex flex-grow gap-x-2 items-center">
         <img class="w-10 h-10 rounded-full" src="/src/assets/navbar-logo.png" />
-        <router-link to="/" class="font-bold">Urban Gardening</router-link>
+        <router-link to="/dashboard" class="font-bold">Urban Gardening</router-link>
       </div>
       <router-link to="/profile">
         <div class="flex gap-x-1 items-center">
