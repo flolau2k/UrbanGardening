@@ -8,7 +8,6 @@ const startTimelapse = (): void => {
 }
 </script>
 
-//style="{ backgroundImage: 'url(${loginPicture})' }"
 <template>
   <div class="w-[420px] h-[230px] rounded-lg relative group">
     <div

@@ -3,16 +3,10 @@
 @tailwind utilities;
 
 .bg-colour {
-  /* background-color: #118ab2;
-    background-image: linear-gradient(319deg, #118ab2 0%, #06d6a0 37%, #ffd166 100%); */
-
-  /* background: linear-gradient(112.9deg, rgb(112, 255, 151) 6.2%, rgb(70, 195, 255) 99.7%); */
-
-  /* background: linear-gradient(109.6deg, rgb(148, 233, 194) 11.2%, rgb(224, 235, 186) 91.1%); */
-
-  /* background: linear-gradient(106.7deg, rgb(245, 167, 191) -6.2%, rgb(201, 218, 238) 46.4%, rgb(164, 240, 229) 86.4%); */
-
-  /* background: linear-gradient(to top, #d5dee7 0%, #ffafbd 0%, #c9ffbf 100%); */
+  /* background-image: url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
   background-color: #89d8d3;
   background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
 }

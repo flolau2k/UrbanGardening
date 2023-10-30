@@ -10,7 +10,7 @@ const login = (): void => {
 }
 </script>
 <template>
-  <div class="flex justify-center items-center w-full h-full">
+  <div class=" flex justify-center items-center min-w-screen min-h-screen">
     <div class="w-1/2 h-1/2 bg-white rounded-lg grid grid-cols-2">
       <div
         class="col-span-1 bg-center bg-cover rounded-l-lg"
