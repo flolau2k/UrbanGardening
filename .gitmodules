@@ -1,0 +1,3 @@
+[submodule "UrbanGardeningSensors"]
+	path = UrbanGardeningSensors
+	url = git@github.com:kurz-m/UrbanGardeningSensors.git
