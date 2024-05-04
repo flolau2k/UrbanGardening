@@ -1,10 +1,10 @@
 from random import random
 from time import sleep
 # import matplotlib.pyplot as plt
-from myPID import myPID
+from feedback.basePID import basePID
 from influx_client import influx_interface  # , Point
 
-pid = myPID(0.1, 100, -100, 0.5, 0, 0)
+pid = basePID(0.1, 100, -100, 0.5, 0, 0)
 
 influx = influx_interface()
 
@@ -27,7 +27,6 @@ while (True):
         act = "PH up"
     elif inc < 0:
         act = "PH down"
-    # print(f"ph = {ph:.2f}, act = {act}")
     point = influx.create_point("pH_sensor", "pH_sensor", "001", ph)
     # point = (Point("pH_Sensor")
     #          .measurement("pH_Sensor")

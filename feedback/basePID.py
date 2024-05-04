@@ -1,5 +1,5 @@
 # code from https://itzwieseltal.wordpress.com/2020/06/02/python-pid-regler/
-class myPID:
+class basePID:
     def __init__(self, dt, max, min, kp, kd, ki):
         self.dt = dt
         self.max = max
