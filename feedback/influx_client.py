@@ -16,14 +16,14 @@ def get_logger(name):
 
 class influx_interface():
     def __init__(self) -> None:
-        self.token = "tRMAaKRbbvAwfLBsDC2rWleCJZwVvtLpSzFPxv9byfX5KnTOhvztkiXeUpBnVknDqNUs4GEnrzK4ImdauoN-pg=="
-        self.org = "ug"
+        self.token = "dfLsGRYXZahjy2r8wseXtfzhkZ4fObpc4Jz0YSzi2IThpO_60ZqnBxkB7q6So5AmTp4OLOsrspuKwzkQF0Al_A=="
+        self.org = "42Heilbronn"
         self.url = "http://localhost:8086"
         self.client = InfluxDBClient(url=self.url,
                                      token=self.token, org=self.org)
         self.write_api = self.client.write_api(write_options=SYNCHRONOUS)
         self.query_api = self.client.query_api()
-        self.bucket = "garden"
+        self.bucket = "urban"
         self.logger = get_logger("influx_interface")
 
     def write(self, point: Point):
