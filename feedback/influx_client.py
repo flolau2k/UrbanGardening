@@ -16,8 +16,8 @@ def get_logger(name):
 
 class influx_interface():
     def __init__(self) -> None:
-        self.token = "dfLsGRYXZahjy2r8wseXtfzhkZ4fObpc4Jz0YSzi2IThpO_60ZqnBxkB7q6So5AmTp4OLOsrspuKwzkQF0Al_A=="
-        self.org = "42Heilbronn"
+        self.token = "E-x4J6jItTw9v1fJunR8tTOeOd4tfObhaBlLuWGeBXhRtGUbV6eIYwSb8JNOl_E826WqA74hipZ9jYcHQYANpg=="
+        self.org = "ug"
         self.url = "http://localhost:8086"
         self.client = InfluxDBClient(url=self.url,
                                      token=self.token, org=self.org)
