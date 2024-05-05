@@ -16,7 +16,7 @@ def main():
     tds_p_regulator = basePID(550, 950)
 
     # Create structures for opcode and received measurements
-    opcode_struct = pParam.PumpParams(0, 0, 0, 0, 0, 0)
+    opcode_struct = pParam.PumpParams(0, 0, 0, 0, 0)
     receive_struct = rData.ReceiveData()
 
     # Create serial interface for UART connection from Pi to Arduino
@@ -47,26 +47,37 @@ def main():
                 tds_check = tds_p_regulator.regulate(receive_struct.tds_value)
 
                 if ph_check == 1:
-                    code = int(format(16, "b"))
-                    opcode_struct.opcode = opcode_struct.opcode | code
+                    opcode_struct.pump_ph_down = 1
+                    opcode_struct.circular_pump = 1
+                    # code = int(format(16, "b"))
+                    # opcode_struct.opcode = opcode_struct.opcode | code
                 elif ph_check == -1:
-                    code = int(format(8, "b"))
-                    opcode_struct.opcode = opcode_struct.opcode | code
+                    opcode_struct.pump_ph_up = 1
+                    opcode_struct.circular_pump = 1
+                    # code = int(format(8, "b"))
+                    # opcode_struct.opcode = opcode_struct.opcode | code
                 else:
-                    up = int(format(8, "b"))
-                    down = int(format(16, "b"))
-                    opcode_struct.opcode = opcode_struct.opcode & ~(up | down)
+                    opcode_struct.pump_ph_up = 0
+                    opcode_struct.pump_ph_down = 0
+                    opcode_struct.circular_pump = 0
+                    # up = int(format(8, "b"))
+                    # down = int(format(16, "b"))
+                    # opcode_struct.opcode = opcode_struct.opcode & ~(up | down)
 
                 if tds_check == -1:
-                    a = int(format(2, "b"))
-                    b = int(format(4, "b"))
-                    circ = int(format(32, "b"))
-                    opcode_struct.opcode = opcode_struct.opcode | (a | b | circ)
+                    opcode_struct.pump_a = 1
+                    opcode_struct.pump_b = 1
                     opcode_struct.circular_pump = 1
+                    # a = int(format(2, "b"))
+                    # b = int(format(4, "b"))
+                    # circ = int(format(32, "b"))
+                    # opcode_struct.opcode = opcode_struct.opcode | (a | b | circ)
                 else:
-                    a = int(format(2, "b"))
-                    b = int(format(4, "b"))
-                    opcode_struct.opcode = opcode_struct.opcode & ~(up | down)
+                    opcode_struct.pump_a = 0
+                    opcode_struct.pump_b = 0
+                    # a = int(format(2, "b"))
+                    # b = int(format(4, "b"))
+                    # opcode_struct.opcode = opcode_struct.opcode & ~(a | b)
 
                 opcode = opcode_struct.pack()
 
